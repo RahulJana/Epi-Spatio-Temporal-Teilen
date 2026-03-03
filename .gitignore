@@ -3,3 +3,7 @@ __pycache__
 obsolete
 overcome
 .DS_Store
+# Data files
+*.csv
+# Keep processed data folder but ignore CSVs inside
+kcc_codebase/processed_data/*.csv

@@ -1,0 +1,49 @@
+2026-03-03 16:53:30,589 - INFO - SSIR_STGCN model training begins.
+2026-03-03 16:53:32,595 - INFO - Epoch 0, Horizon [1], Mode [training]: Loss = 2.478725, Pre Loss = 2.123917, Phy Loss = 0.633820, Phy_y Loss = 0.354809.
+2026-03-03 16:53:32,773 - INFO - Epoch 0, Horizon [1], Mode [validation]: Loss decreased from [inf, inf, inf] to [0.000000, 0.000000, 0.004716], Phy_y Loss: 0.000000. Saving model checkpoint.
+2026-03-03 16:53:32,791 - INFO - Epoch 0, Current Epoch 0, Learning Rate: 0.001000, Time Elapsed: 2s.0202ms.
+2026-03-03 16:53:34,772 - INFO - Epoch 1, Horizon [1], Mode [training]: Loss = 0.443138, Pre Loss = 0.235861, Phy Loss = 0.467117, Phy_y Loss = 0.207277.
+2026-03-03 16:53:34,944 - INFO - Epoch 1, Horizon [1], Mode [validation]: Loss did not improve from [0.000000, 0.000000, 0.000000], Phy_y Loss: 0.000000. Patience remaining: 2.
+2026-03-03 16:53:34,944 - INFO - Epoch 1, Current Epoch 1, Learning Rate: 0.001000, Time Elapsed: 2s.0152ms.
+2026-03-03 16:53:36,926 - INFO - Epoch 2, Horizon [1], Mode [training]: Loss = 0.396782, Pre Loss = 0.214054, Phy Loss = 0.506054, Phy_y Loss = 0.182728.
+2026-03-03 16:53:37,107 - INFO - Epoch 2, Horizon [1], Mode [validation]: Loss did not improve from [0.000000, 0.000000, 0.000000], Phy_y Loss: 0.000000. Patience remaining: 1.
+2026-03-03 16:53:37,107 - INFO - Epoch 2, Current Epoch 2, Learning Rate: 0.001000, Time Elapsed: 2s.0162ms.
+2026-03-03 16:53:39,118 - INFO - Epoch 3, Horizon [1], Mode [training]: Loss = 0.379281, Pre Loss = 0.211035, Phy Loss = 0.424195, Phy_y Loss = 0.168246.
+2026-03-03 16:53:39,290 - INFO - Epoch 3, Horizon [1], Mode [validation]: Loss did not improve from [0.000000, 0.000000, 0.000000], Phy_y Loss: 0.000000. Patience remaining: 0.
+2026-03-03 16:53:39,290 - WARNING - Early stopping at Epoch 3, Horizon [1]. Validation loss did not decrease after 3 epochs. Time elapsed: 8s.0701ms.
+2026-03-03 16:53:39,290 - INFO - Horizon [1] training completed. Learning Rate: 0.001000, Time Elapsed: 8s.0701ms.
+2026-03-03 16:53:41,309 - INFO - Epoch 3, Horizon [2], Mode [training]: Loss = 0.411960, Pre Loss = 0.216342, Phy Loss = 0.565959, Phy_y Loss = 0.195618.
+2026-03-03 16:53:41,479 - INFO - Epoch 3, Horizon [2], Mode [validation]: Loss decreased from [inf, inf, inf] to [0.010090, 0.005045, 0.010248], Phy_y Loss: 0.005045. Saving model checkpoint.
+2026-03-03 16:53:41,496 - INFO - Epoch 3, Current Epoch 0, Learning Rate: 0.001000, Time Elapsed: 2s.0205ms.
+2026-03-03 16:53:43,485 - INFO - Epoch 4, Horizon [2], Mode [training]: Loss = 0.392742, Pre Loss = 0.207751, Phy Loss = 0.509127, Phy_y Loss = 0.184991.
+2026-03-03 16:53:43,661 - INFO - Epoch 4, Horizon [2], Mode [validation]: Loss did not improve from [0.010090, 0.005045, 0.005045], Phy_y Loss: 0.005045. Patience remaining: 2.
+2026-03-03 16:53:43,662 - INFO - Epoch 4, Current Epoch 1, Learning Rate: 0.001000, Time Elapsed: 2s.0165ms.
+2026-03-03 16:53:45,628 - INFO - Epoch 5, Horizon [2], Mode [training]: Loss = 0.394008, Pre Loss = 0.209237, Phy Loss = 0.508968, Phy_y Loss = 0.184772.
+2026-03-03 16:53:45,808 - INFO - Epoch 5, Horizon [2], Mode [validation]: Loss did not improve from [0.010090, 0.005045, 0.005045], Phy_y Loss: 0.005045. Patience remaining: 1.
+2026-03-03 16:53:45,808 - INFO - Epoch 5, Current Epoch 2, Learning Rate: 0.001000, Time Elapsed: 2s.0145ms.
+2026-03-03 16:53:47,785 - INFO - Epoch 6, Horizon [2], Mode [training]: Loss = 0.428896, Pre Loss = 0.236186, Phy Loss = 0.586815, Phy_y Loss = 0.192710.
+2026-03-03 16:53:47,966 - INFO - Epoch 6, Horizon [2], Mode [validation]: Loss did not improve from [0.010090, 0.005045, 0.005045], Phy_y Loss: 0.005045. Patience remaining: 0.
+2026-03-03 16:53:47,966 - WARNING - Early stopping at Epoch 6, Horizon [2]. Validation loss did not decrease after 3 epochs. Time elapsed: 8s.0675ms.
+2026-03-03 16:53:47,966 - INFO - Horizon [2] training completed. Learning Rate: 0.001000, Time Elapsed: 8s.0675ms.
+2026-03-03 16:53:49,974 - INFO - Epoch 6, Horizon [3], Mode [training]: Loss = 0.429829, Pre Loss = 0.225009, Phy Loss = 0.634894, Phy_y Loss = 0.204820.
+2026-03-03 16:53:50,151 - INFO - Epoch 6, Horizon [3], Mode [validation]: Loss decreased from [inf, inf, inf] to [0.091493, 0.045747, 0.036029], Phy_y Loss: 0.045747. Saving model checkpoint.
+2026-03-03 16:53:50,170 - INFO - Epoch 6, Current Epoch 0, Learning Rate: 0.001000, Time Elapsed: 2s.0203ms.
+2026-03-03 16:53:52,189 - INFO - Epoch 7, Horizon [3], Mode [training]: Loss = 0.415362, Pre Loss = 0.214328, Phy Loss = 0.610359, Phy_y Loss = 0.201034.
+2026-03-03 16:53:52,361 - INFO - Epoch 7, Horizon [3], Mode [validation]: Loss did not improve from [0.091493, 0.045747, 0.045747], Phy_y Loss: 0.045747. Patience remaining: 2.
+2026-03-03 16:53:52,362 - INFO - Epoch 7, Current Epoch 1, Learning Rate: 0.001000, Time Elapsed: 2s.0191ms.
+2026-03-03 16:53:54,393 - INFO - Epoch 8, Horizon [3], Mode [training]: Loss = 0.396126, Pre Loss = 0.206053, Phy Loss = 0.550310, Phy_y Loss = 0.190074.
+2026-03-03 16:53:54,566 - INFO - Epoch 8, Horizon [3], Mode [validation]: Loss did not improve from [0.091493, 0.045747, 0.045747], Phy_y Loss: 0.045747. Patience remaining: 1.
+2026-03-03 16:53:54,566 - INFO - Epoch 8, Current Epoch 2, Learning Rate: 0.001000, Time Elapsed: 2s.0204ms.
+2026-03-03 16:53:56,606 - INFO - Epoch 9, Horizon [3], Mode [training]: Loss = 0.412114, Pre Loss = 0.216236, Phy Loss = 0.602981, Phy_y Loss = 0.195878.
+2026-03-03 16:53:56,789 - INFO - Epoch 9, Horizon [3], Mode [validation]: Loss did not improve from [0.091493, 0.045747, 0.045747], Phy_y Loss: 0.045747. Patience remaining: 0.
+2026-03-03 16:53:56,789 - WARNING - Early stopping at Epoch 9, Horizon [3]. Validation loss did not decrease after 3 epochs. Time elapsed: 8s.0823ms.
+2026-03-03 16:53:56,789 - INFO - Horizon [3] training completed. Learning Rate: 0.000500, Time Elapsed: 8s.0823ms.
+2026-03-03 16:53:58,530 - INFO - SSIR_STGCN model training ended. Total Time Elapsed: 27s.0941ms.
+2026-03-03 16:53:58,530 - INFO - SSIR_STGCN model testing begins.
+2026-03-03 16:53:58,556 - INFO - SSIR_STGCN model testing on [training] data begins.
+2026-03-03 16:53:59,260 - INFO - SSIR_STGCN model testing on [training] end.
+2026-03-03 16:53:59,260 - INFO - SSIR_STGCN model testing on [validation] data begins.
+2026-03-03 16:53:59,458 - INFO - SSIR_STGCN model testing on [validation] end.
+2026-03-03 16:53:59,459 - INFO - SSIR_STGCN model testing on [test] data begins.
+2026-03-03 16:53:59,506 - INFO - SSIR_STGCN model testing on [test] end.
+2026-03-03 16:53:59,508 - INFO - SSIR_STGCN model testing end.

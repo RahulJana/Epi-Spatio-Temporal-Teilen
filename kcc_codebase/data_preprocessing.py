@@ -167,6 +167,55 @@ def aggregate_monthly(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # ===========================================================================
+# Step 1.3b – Ensure Complete Panel (all state × month combinations)
+# ===========================================================================
+def ensure_complete_panel(agg: pd.DataFrame) -> pd.DataFrame:
+    """
+    Reindex to a full NumStates × NumMonths panel so every (state, date)
+    combination is present.
+
+    Missing rows get:
+      - I_raw = 0      (no pest attacks reported)
+      - rainfall / harvest_area forward-filled within state, then back-filled,
+        then set to 0 if still missing (brand-new state with no prior records)
+    """
+    log.info("Ensuring complete panel (all state × month combos) ...")
+
+    all_dates = agg["date"].unique()
+    all_states = agg["state"].unique()
+
+    full_idx = pd.MultiIndex.from_product(
+        [all_states, all_dates], names=["state", "date"]
+    )
+    agg_full = (
+        agg.set_index(["state", "date"])
+        .reindex(full_idx)
+        .reset_index()
+    )
+
+    # Fill I_raw = 0 where missing
+    agg_full["I_raw"] = agg_full["I_raw"].fillna(0.0)
+
+    # Forward-fill then back-fill rainfall and harvest_area within each state
+    for col in ["rainfall", "harvest_area"]:
+        agg_full[col] = (
+            agg_full.groupby("state")[col]
+            .transform(lambda s: s.ffill().bfill())
+            .fillna(0.0)
+        )
+
+    agg_full.sort_values(["state", "date"], inplace=True)
+    agg_full.reset_index(drop=True, inplace=True)
+
+    added = len(agg_full) - len(agg)
+    log.info(
+        "  Panel expanded: %d → %d rows (+%d missing slots filled)",
+        len(agg), len(agg_full), added,
+    )
+    return agg_full
+
+
+# ===========================================================================
 # Step 1.4 – Construct SIR State Variables
 # ===========================================================================
 def construct_sir(agg: pd.DataFrame) -> pd.DataFrame:
@@ -297,6 +346,9 @@ def main():
 
     # 1.3 Aggregate to monthly state-level
     agg = aggregate_monthly(df)
+
+    # 1.3b Ensure complete panel
+    agg = ensure_complete_panel(agg)
 
     # 1.4 Construct SIR variables
     sir = construct_sir(agg)

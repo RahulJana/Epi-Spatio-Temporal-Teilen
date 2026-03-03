@@ -53,42 +53,73 @@ def run_phase_1():
 
 def run_phase_2():
     """Spatial graph construction – adjacency matrices."""
+    from graph_construction import main as phase2_main
     log.info("=" * 60)
-    log.info("PHASE 2 – Graph Construction  [NOT YET IMPLEMENTED]")
+    log.info("PHASE 2 – Graph Construction")
     log.info("=" * 60)
-    raise NotImplementedError(
-        "graph_construction.py has not been created yet."
-    )
+    geo, soft, corr = phase2_main()
+    log.info("Phase 2 complete. Adjacency matrices: geo=%s, soft=%s, corr=%s",
+             geo.shape, soft.shape, corr.shape)
+    return geo, soft, corr
 
 
-def run_phase_3():
+def run_phase_3(context: dict):
     """Dataset builder – sliding window DataLoaders."""
+    from dataset_builder import main as phase3_main
     log.info("=" * 60)
-    log.info("PHASE 3 – Dataset Builder  [NOT YET IMPLEMENTED]")
+    log.info("PHASE 3 – Dataset Builder")
     log.info("=" * 60)
-    raise NotImplementedError(
-        "dataset_builder.py has not been created yet."
+    params = context.get("params", {})
+    data_repo, auxdata = phase3_main(
+        obs_len=params.get("obs_len", 12),
+        pre_len=params.get("pre_len", 3),
+        batch_size=params.get("batch_size", 8),
+        device=params.get("dev", "cpu"),
+        params=params,
     )
+    context["data_repo"] = data_repo
+    context["auxdata"] = auxdata
+    sizes = {k: len(v.dataset) for k, v in data_repo.items()}
+    log.info("Phase 3 complete. DataLoader sizes: %s", sizes)
+    return data_repo, auxdata
 
 
-def run_phase_4():
-    """Model configuration – hyperparameters and Constant.py patches."""
+def run_phase_4(context: dict):
+    """Model configuration – hyperparameters."""
+    from model_config import get_params
     log.info("=" * 60)
-    log.info("PHASE 4 – Model Config  [NOT YET IMPLEMENTED]")
+    log.info("PHASE 4 – Model Config")
     log.info("=" * 60)
-    raise NotImplementedError(
-        "model_config.py has not been created yet."
-    )
+    params = get_params()
+    context["params"] = params
+    log.info("Phase 4 complete. graph_type=%s  obs_len=%d  pre_len=%d",
+             params["graph_type"], params["obs_len"], params["pre_len"])
+    return params
 
 
-def run_phase_5():
+def run_phase_5(context: dict):
     """Training and evaluation."""
+    from train_eval import main as phase5_main
     log.info("=" * 60)
-    log.info("PHASE 5 – Train & Eval  [NOT YET IMPLEMENTED]")
+    log.info("PHASE 5 – Train & Eval")
     log.info("=" * 60)
-    raise NotImplementedError(
-        "train_eval.py has not been created yet."
+    data_repo = context.get("data_repo")
+    auxdata = context.get("auxdata")
+    params = context.get("params")
+    if data_repo is None or params is None:
+        raise RuntimeError(
+            "Phase 5 requires data_repo (Phase 3) and params (Phase 4) "
+            "to have been run first."
+        )
+    results = phase5_main(
+        data_repo=data_repo,
+        auxdata=auxdata,
+        params=params,
+        model_types=["SSIR_STGCN"],
     )
+    context["results"] = results
+    log.info("Phase 5 complete. Models trained: %s", list(results.keys()))
+    return results
 
 
 def run_phase_6():
@@ -104,6 +135,7 @@ def run_phase_6():
 # ---------------------------------------------------------------------------
 # Phase registry
 # ---------------------------------------------------------------------------
+# Note: phases 3–5 accept a shared context dict for inter-phase data passing.
 PHASE_REGISTRY = {
     1: run_phase_1,
     2: run_phase_2,
@@ -146,10 +178,30 @@ def main():
     log.info("Pipeline starting – phases to run: %s", phases_to_run)
     overall_start = time.time()
 
+    # Shared context carries state between phases
+    context: dict = {}
+
+    # Pre-load model config if any of phases 3,4,5 are in scope, so phase 3
+    # can use the correct obs_len / pre_len / batch_size.
+    if any(p in phases_to_run for p in [3, 4, 5]):
+        log.info("Pre-loading model config for inter-phase context ...")
+        try:
+            from model_config import get_params
+            context["params"] = get_params()
+        except Exception as exc:
+            log.warning("Could not pre-load model config: %s", exc)
+
     for phase_num in phases_to_run:
         t0 = time.time()
         try:
-            PHASE_REGISTRY[phase_num]()
+            fn = PHASE_REGISTRY[phase_num]
+            # Phases 3, 4, 5 accept a context dict
+            import inspect
+            sig = inspect.signature(fn)
+            if "context" in sig.parameters:
+                fn(context)
+            else:
+                fn()
         except NotImplementedError as exc:
             log.warning("Skipping Phase %d: %s", phase_num, exc)
             log.info("Stopping pipeline – implement remaining phases first.")
